@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Striscione Font" />
+<meta property="og:description" content="A free font inspired by the hand-painted banners of Italian football fans and ultras." />
+<meta property="og:url" content="https://mikecardarelli.github.io/striscione-font/" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://mikecardarelli.github.io/striscione-font/preview.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<title>Striscione Font</title>
+<style>
+  @font-face {
+      font-family: 'Striscione';
+      src: url('striscione.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* the pale pink gazzetta.it uses as a background */
+    --paper: #fde9eb;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 16px;
+    right: 40px;
+    font-size: 13px;
+    color: #000;
+  }
+
+  footer a {
+    color: #000;
+  }
+
+  footer a:hover {
+    color: blue;
+  }
+
+  .lang-switch {
+    position: fixed;
+    top: 16px;
+    right: 40px;
+    z-index: 3;
+    font-size: 13px;
+  }
+
+  .lang-switch button {
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: 0.12em;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #000;
+    cursor: pointer;
+  }
+
+  .lang-switch button:hover {
+    color: blue;
+  }
+
+  .lang-switch button.active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  body {
+    background: var(--paper);
+    color: #000;
+    font-family: Courier, monospace;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .page {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  /* Left sidebar: title, text + input. The title is allowed to spill over the sky. */
+  .sidebar {
+    flex-shrink: 0;
+    width: 384px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header {
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Striscione', Impact, 'Arial Narrow', sans-serif;
+    font-size: clamp(56px, 9vw, 132px);
+    font-weight: normal;
+    line-height: 1;
+    white-space: nowrap;
+    margin-bottom: 32px;
+  }
+
+  .header-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .download-link {
+    color: #000;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .download-link:hover {
+    color: blue;
+  }
+
+  .banner-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .banner-bar label, .swatch-label {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #000;
+  }
+
+  .banner-bar input {
+    font-family: Courier, monospace;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    width: 100%;
+    padding: 2px 0;
+    background: transparent;
+    color: #000;
+  }
+
+  .banner-bar input::placeholder {
+    color: #8a7a76;
+  }
+
+  .color-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .swatch-label {
+    width: 68px;
+    font-size: 12px;
+  }
+
+  .color-swatch {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    border-radius: 0;
+    appearance: none;
+  }
+
+  .color-swatch.active {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .ascii-wrap {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0 40px 56px 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  /* The scene is 110 columns wide (~68em in Courier); size it to fit whichever of height/width is tighter */
+  .ascii-scene {
+    font-family: Courier, monospace;
+    white-space: pre;
+    display: block;
+    font-size: clamp(7px, min(2vh, calc((100vw - 424px) / 68.5)), 22px);
+    font-weight: bold;
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+  }
+
+  /* The cloth sits absolutely over the empty rectangle in the ascii banner */
+  #banner-overlay {
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  #banner-text {
+    font-family: 'Striscione', Impact, 'Arial Narrow', sans-serif;
+    white-space: nowrap;
+    line-height: 1;
+    transform-origin: center;
+  }
+
+  @media (max-width: 768px) {
+    html, body {
+      overflow: auto;
+    }
+    .page {
+      flex-direction: column;
+      height: auto;
+      min-height: 100vh;
+      overflow: visible;
+    }
+    .sidebar {
+      width: 100%;
+      padding: 48px 20px 20px;
+    }
+    .lang-switch {
+      position: absolute;
+      top: 14px;
+      right: 20px;
+    }
+    h1 {
+      font-size: 14vw;
+      margin-bottom: 20px;
+    }
+    .description, .download-link, .banner-bar input::placeholder {
+      font-size: 14px;
+    }
+    .ascii-wrap {
+      flex: none;
+      padding: 24px 0 24px 0;
+      justify-content: center;
+    }
+    .ascii-scene {
+      font-size: calc(100vw / 69);
+    }
+    footer {
+      display: none;
+    }
+  }
+
+</style>
+ <!-- Emoji Favicon -->
+  <script>
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    ctx.font = '28px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⚽', 16, 18);
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = canvas.toDataURL();
+    document.head.appendChild(link);
+  </script>
+</head>
+<body>
+<nav class="lang-switch" aria-label="Language / Lingua">
+  <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button> /
+  <button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+</nav>
+<div class="page">
+
+  <aside class="sidebar">
+    <header class="header">
+      <h1>STRISCIONE</h1>
+      <div class="header-sub">
+        <p class="description" data-i18n="description">A free font inspired by the hand-painted banners (<i>striscioni</i>) of Italian football fans and ultras</p>
+        <!-- TODO: point this at the real download once the font is published -->
+        <a href="#" class="download-link" id="download-link" data-i18n="download">Download &rarr;</a>
+      </div>
+    </header>
+    <div class="banner-bar">
+      <label for="banner-input" data-i18n="label">Hang a banner!</label>
+      <input
+        id="banner-input"
+        type="text"
+        maxlength="40"
+        placeholder="type something..."
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </div>
+    <div class="color-row" id="paint-picker">
+      <span class="swatch-label" data-i18n="paint">Paint</span>
+      <button class="color-swatch active" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
+      <button class="color-swatch" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
+      <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
+      <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
+      <button class="color-swatch" data-color="#1560d4" style="background:#1560d4;" data-name="blue" title="Blue"></button>
+      <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
+    </div>
+    <div class="color-row" id="cloth-picker">
+      <span class="swatch-label" data-i18n="cloth">Cloth</span>
+      <button class="color-swatch active" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
+      <button class="color-swatch" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
+      <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
+      <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
+      <button class="color-swatch" data-color="#14245c" style="background:#14245c;" data-name="navy" title="Navy"></button>
+      <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
+    </div>
+  </aside>
+
+  <div class="ascii-wrap" id="ascii-wrap">
+    <div class="ascii-scene" id="scene">         |~~~~~~/           .(  ).             |~~~~~~/            .(  ).          |~~~~~~/         .(  ).
+         |~~~~~/           (  ~  )             |~~~~~/            (  ~  )          |~~~~~/         (  ~  )
+         |                  (  ~ )             |                   (  ~ )          |                (  ~ )
+         |                   )~(               |                    )~(            |                 )~(
+ o  \o/  |  \o/ \o/  o/ \o/  \*/ o/ \o/  o/ \o | o/ \o/ \o  \o  \o/ \*/ \o/  o/ \o | o/  o/ \o/ \o/  \*/ o/  o
+   o/ \o  \o/ \o/ \o/  o/ \o/  o  \o  \o/  o/ \o/  o/  o   o/ \o/ \o/  o/  o/ \o/  o  \o/  o/ \o/  o/ \o/  o/
+\o/ \o   o/ \o   o  \o   o/ \o   o   o  \o/ \o/ \o/ \o/  o/  o   o/ \o   o  \o   o   o/ \o/ \o/  o/ \o  \o/  o
+  \o/ \o  \o  \o/ \o/  o/  o/  o   o   o   o/ \o   o/ \o  \o/ \o/  o  \o  \o/ \o/  o   o/ \o   o  \o   o  \o/
+\o   o  \o/  o/ \o/ \o  \o/ \o/  o  \o/ \o/ \o  \o  \o  \o/ \o/ \o  \o   o/  o  \o/ \o   o/  o  \o   o  \o  \o
+[]=========[]=========[]=========[]=========[]=========[]=========[]=========[]=========[]=========[]=======[]
+:::::.--------------------------------------------------------------------------------------------------.:::::
+:::::|<span id="banner-tl"></span>                                                                                                  |:::::
+:::::|                                                                                                  |:::::
+:::::|                                                                                                  |:::::
+:::::|                                                                                                  |:::::
+:::::|                                                                                                  |:::::
+:::::|                                                                                                  <span id="banner-br"></span>|:::::
+:::::'--------------------------------------------------------------------------------------------------':::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+ "                ",  '.     '      ,                               .                                     `
+             "                          '         ""      `                   `, "      `
+       ''    ,.                               `         '           ,   '   ,</div>
+    <div id="banner-overlay">
+      <div id="banner-text"></div>
+    </div>
+    <footer><span data-i18n="builtBy">Built by</span> <a href="https://mikecardarelli.com/" target="_blank">Mike C.</a> <span data-i18n="builtIn">in NYC. (Last updated October 2026)</span>
+  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+  </svg>
+  <a href="https://github.com/mikecardarelli/striscione-font" target="_blank" rel="noopener noreferrer" data-i18n="github">
+  open source · view on github
+</a>
+</footer>
+  </div>
+</div>
+
+<script>
+  const input     = document.getElementById('banner-input');
+  const overlay   = document.getElementById('banner-overlay');
+  const bannerEl  = document.getElementById('banner-text');
+  const asciiWrap = document.getElementById('ascii-wrap');
+  const bannerTL  = document.getElementById('banner-tl');
+  const bannerBR  = document.getElementById('banner-br');
+
+  // shown on the banner until someone types their own
+  const DEFAULT_MESSAGE = 'NON MOLLARE MAI';
+
+  function positionOverlay() {
+    const wrapRect = asciiWrap.getBoundingClientRect();
+    const tlRect   = bannerTL.getBoundingClientRect();
+    const brRect   = bannerBR.getBoundingClientRect();
+
+    const width  = brRect.left - tlRect.left;
+    const height = brRect.bottom - tlRect.top;
+
+    overlay.style.top    = (tlRect.top  - wrapRect.top)  + 'px';
+    overlay.style.left   = (tlRect.left - wrapRect.left) + 'px';
+    overlay.style.width  = width + 'px';
+    overlay.style.height = height + 'px';
+
+    // letters fill most of the cloth; long messages get squeezed to fit
+    bannerEl.style.transform = 'none';
+    bannerEl.style.fontSize = (height * 0.85) + 'px';
+    const available = width - height * 0.5;
+    const needed = bannerEl.scrollWidth;
+    if (needed > available) {
+      bannerEl.style.transform = 'scale(' + (available / needed) + ')';
+    }
+  }
+
+  function updateBanner() {
+    bannerEl.textContent = (input.value.trim() ? input.value : DEFAULT_MESSAGE).toUpperCase();
+    positionOverlay();
+  }
+
+  // Color pickers
+  function wirePicker(id, apply) {
+    const swatches = document.querySelectorAll('#' + id + ' .color-swatch');
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        swatches.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        apply(swatch.dataset.color);
+      });
+    });
+  }
+  wirePicker('paint-picker', color => { bannerEl.style.color = color; });
+  wirePicker('cloth-picker', color => { overlay.style.background = color; });
+
+  // Translations
+  const STRINGS = {
+    en: {
+      description: 'A free font inspired by the hand-painted banners (<i>striscioni</i>) of Italian football fans and ultras',
+      download: 'Download &rarr;',
+      label: 'Hang a banner!',
+      placeholder: 'type something...',
+      paint: 'Paint',
+      cloth: 'Cloth',
+      builtBy: 'Built by',
+      builtIn: 'in NYC. (Last updated October 2026)',
+      github: 'open source · view on github',
+      colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy' }
+    },
+    it: {
+      description: 'Un font gratuito ispirato agli striscioni dipinti a mano dei tifosi e degli ultras del calcio italiano',
+      download: 'Scarica &rarr;',
+      label: 'Appendi uno striscione!',
+      placeholder: 'scrivi qualcosa...',
+      paint: 'Vernice',
+      cloth: 'Stoffa',
+      builtBy: 'Creato da',
+      builtIn: 'a NYC. (Ultimo aggiornamento: ottobre 2026)',
+      github: 'open source · vedi su github',
+      colors: { black: 'Nero', white: 'Bianco', red: 'Rosso', green: 'Verde', blue: 'Blu', yellow: 'Giallo', navy: 'Blu scuro' }
+    }
+  };
+
+  const langButtons = document.querySelectorAll('.lang-switch button');
+
+  function setLanguage(lang) {
+    const strings = STRINGS[lang];
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      el.innerHTML = strings[el.dataset.i18n];
+    });
+    input.placeholder = strings.placeholder;
+    document.querySelectorAll('.color-swatch').forEach(swatch => {
+      swatch.title = strings.colors[swatch.dataset.name];
+      swatch.setAttribute('aria-label', swatch.title);
+    });
+    langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+
+  langButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      setLanguage(button.dataset.lang);
+      try { localStorage.setItem('lang', button.dataset.lang); } catch (e) {}
+    });
+  });
+
+  // remembered choice first, then the browser's language
+  let savedLang = null;
+  try { savedLang = localStorage.getItem('lang'); } catch (e) {}
+  setLanguage(STRINGS[savedLang] ? savedLang : (navigator.language || '').toLowerCase().startsWith('it') ? 'it' : 'en');
+
+  input.addEventListener('input', updateBanner);
+  window.addEventListener('resize', positionOverlay);
+
+  // run after fonts load
+  updateBanner();
+  document.fonts.ready.then(positionOverlay);
+  setTimeout(positionOverlay, 500);
+</script>
+</body>
+</html>
