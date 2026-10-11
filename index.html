@@ -175,7 +175,7 @@
   }
 
   .swatch-label {
-    width: 68px;
+    width: 62px;
     font-size: 12px;
   }
 
@@ -321,47 +321,61 @@
     <div class="color-row" id="paint-picker">
       <span class="swatch-label" data-i18n="paint">Paint</span>
       <button class="color-swatch active" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
-      <button class="color-swatch" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
       <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
+      <button class="color-swatch" data-color="#8a1c2c" style="background:#8a1c2c;" data-name="maroon" title="Maroon"></button>
       <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
+      <button class="color-swatch" data-color="#7fcdf0" style="background:#7fcdf0;" data-name="skyblue" title="Sky blue"></button>
       <button class="color-swatch" data-color="#1560d4" style="background:#1560d4;" data-name="blue" title="Blue"></button>
+      <button class="color-swatch" data-color="#14245c" style="background:#14245c;" data-name="navy" title="Navy"></button>
+      <button class="color-swatch" data-color="#5a2d86" style="background:#5a2d86;" data-name="purple" title="Purple"></button>
       <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
+      <button class="color-swatch" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
     </div>
     <div class="color-row" id="cloth-picker">
       <span class="swatch-label" data-i18n="cloth">Cloth</span>
-      <button class="color-swatch active" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
       <button class="color-swatch" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
       <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
+      <button class="color-swatch" data-color="#8a1c2c" style="background:#8a1c2c;" data-name="maroon" title="Maroon"></button>
       <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
+      <button class="color-swatch" data-color="#7fcdf0" style="background:#7fcdf0;" data-name="skyblue" title="Sky blue"></button>
+      <button class="color-swatch" data-color="#1560d4" style="background:#1560d4;" data-name="blue" title="Blue"></button>
       <button class="color-swatch" data-color="#14245c" style="background:#14245c;" data-name="navy" title="Navy"></button>
+      <button class="color-swatch" data-color="#5a2d86" style="background:#5a2d86;" data-name="purple" title="Purple"></button>
       <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
+      <button class="color-swatch active" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
     </div>
   </aside>
 
   <div class="ascii-wrap" id="ascii-wrap">
-    <div class="ascii-scene" id="scene">         |~~~~~~/           .(  ).             |~~~~~~/            .(  ).          |~~~~~~/         .(  ).
-         |~~~~~/           (  ~  )             |~~~~~/            (  ~  )          |~~~~~/         (  ~  )
-         |                  (  ~ )             |                   (  ~ )          |                (  ~ )
-         |                   )~(               |                    )~(            |                 )~(
- o  \o/  |  \o/ \o/  o/ \o/  \*/ o/ \o/  o/ \o | o/ \o/ \o  \o  \o/ \*/ \o/  o/ \o | o/  o/ \o/ \o/  \*/ o/  o
+    <div class="ascii-scene" id="scene">.-------.                                                                                            .-------.
+|o o o o|                                                                                            |o o o o|
+|o o o o|                                                                                            |o o o o|
+'-------'                                                                                            '-------'
+   |X|              |~~~~~~/                      |~~~~~~/                      |~~~~~~/                |X|
+   |X|              |~~~~~/                       |~~~~~/                       |~~~~~/                 |X|
+   |X|              |                             |                             |                       |X|
+   |X|              |                             |                             |                       |X|
+ o |X|  \o/ \o/ \o  |   \o/  \o/ o/ \o/  o/ \o    |  o/ \o  \o  \o/ \o/ \o/  o  |   \o/  o/ \o/ \o/  \o |X|  o
    o/ \o  \o/ \o/ \o/  o/ \o/  o  \o  \o/  o/ \o/  o/  o   o/ \o/ \o/  o/  o/ \o/  o  \o/  o/ \o/  o/ \o/  o/
 \o/ \o   o/ \o   o  \o   o/ \o   o   o  \o/ \o/ \o/ \o/  o/  o   o/ \o   o  \o   o   o/ \o/ \o/  o/ \o  \o/  o
   \o/ \o  \o  \o/ \o/  o/  o/  o   o   o   o/ \o   o/ \o  \o/ \o/  o  \o  \o/ \o/  o   o/ \o   o  \o   o  \o/
 \o   o  \o/  o/ \o/ \o  \o/ \o/  o  \o/ \o/ \o  \o  \o  \o/ \o/ \o  \o   o/  o  \o/ \o   o/  o  \o   o  \o  \o
 []=========[]=========[]=========[]=========[]=========[]=========[]=========[]=========[]=========[]=======[]
-:::::.--------------------------------------------------------------------------------------------------.:::::
-:::::|<span id="banner-tl"></span>                                                                                                  |:::::
-:::::|                                                                                                  |:::::
-:::::|                                                                                                  |:::::
-:::::|                                                                                                  |:::::
-:::::|                                                                                                  |:::::
-:::::|                                                                                                  <span id="banner-br"></span>|:::::
-:::::'--------------------------------------------------------------------------------------------------':::::
+::::::::.--------------------------------------------------------------------------------------------.::::::::
+::::::::|<span id="banner-tl"></span>                                                                                            |::::::::
+::::::::|                                                                                            |::::::::
+::::::::|                                                                                            |::::::::
+::::::::|                                                                                            |::::::::
+::::::::|                                                                                            |::::::::
+::::::::|                                                                                            <span id="banner-br"></span>|::::::::
+::::::::'--------------------------------------------------------------------------------------------'::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
- "                ",  '.     '      ,                               .                                     `
-             "                          '         ""      `                   `, "      `
-       ''    ,.                               `         '           ,   '   ,</div>
+                        `                                "  `          "                                 |&gt;
+           ''                         "                                     ,                            |
+_________________________________________________________________________________________________________|
+   `                          '          "                        '        "     '                 '.     \
+                                                    .     ,    .                    ,     ,          '-.   \</div>
     <div id="banner-overlay">
       <div id="banner-text"></div>
     </div>
@@ -383,9 +397,6 @@
   const asciiWrap = document.getElementById('ascii-wrap');
   const bannerTL  = document.getElementById('banner-tl');
   const bannerBR  = document.getElementById('banner-br');
-
-  // shown on the banner until someone types their own
-  const DEFAULT_MESSAGE = 'NON MOLLARE MAI';
 
   function positionOverlay() {
     const wrapRect = asciiWrap.getBoundingClientRect();
@@ -411,7 +422,7 @@
   }
 
   function updateBanner() {
-    bannerEl.textContent = (input.value.trim() ? input.value : DEFAULT_MESSAGE).toUpperCase();
+    bannerEl.textContent = input.value.toUpperCase();
     positionOverlay();
   }
 
@@ -441,7 +452,7 @@
       builtBy: 'Built by',
       builtIn: 'in NYC. (Last updated October 2026)',
       github: 'open source · view on github',
-      colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy' }
+      colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy', maroon: 'Maroon', skyblue: 'Sky blue', purple: 'Purple' }
     },
     it: {
       description: 'Un font gratuito ispirato agli striscioni dipinti a mano dei tifosi e degli ultras del calcio italiano',
@@ -453,7 +464,7 @@
       builtBy: 'Creato da',
       builtIn: 'a NYC. (Ultimo aggiornamento: ottobre 2026)',
       github: 'open source · vedi su github',
-      colors: { black: 'Nero', white: 'Bianco', red: 'Rosso', green: 'Verde', blue: 'Blu', yellow: 'Giallo', navy: 'Blu scuro' }
+      colors: { black: 'Nero', white: 'Bianco', red: 'Rosso', green: 'Verde', blue: 'Blu', yellow: 'Giallo', navy: 'Blu scuro', maroon: 'Granata', skyblue: 'Celeste', purple: 'Viola' }
     }
   };
 
