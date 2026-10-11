@@ -170,7 +170,7 @@
   .color-row {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
     margin-top: 16px;
   }
 
@@ -180,8 +180,8 @@
   }
 
   .color-swatch {
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     border: 1px solid #000;
     cursor: pointer;
     flex-shrink: 0;
@@ -198,20 +198,20 @@
   .ascii-wrap {
     flex: 1;
     min-width: 0;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding: 0 40px 56px 0;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-end;
     position: relative;
   }
 
-  /* The scene is 110 columns wide (~68em in Courier); size it to fit whichever of height/width is tighter */
+  /* Sized by window height only; on narrower windows the right side of the scene runs off the edge */
   .ascii-scene {
     font-family: Courier, monospace;
     white-space: pre;
     display: block;
-    font-size: clamp(7px, min(2vh, calc((100vw - 424px) / 68.5)), 22px);
+    font-size: clamp(10px, 2vh, 22px);
     font-weight: bold;
     line-height: 1.18;
     letter-spacing: 0.02em;
@@ -263,6 +263,7 @@
     }
     .ascii-wrap {
       flex: none;
+      overflow: hidden;
       padding: 24px 0 24px 0;
       justify-content: center;
     }
@@ -284,7 +285,7 @@
     ctx.font = '28px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('⚽', 16, 18);
+    ctx.fillText('📣', 16, 18);
     const link = document.createElement('link');
     link.rel = 'icon';
     link.href = canvas.toDataURL();
@@ -321,26 +322,32 @@
     <div class="color-row" id="paint-picker">
       <span class="swatch-label" data-i18n="paint">Paint</span>
       <button class="color-swatch active" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
+      <button class="color-swatch" data-color="#8b8d90" style="background:#8b8d90;" data-name="gray" title="Gray"></button>
       <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
       <button class="color-swatch" data-color="#8a1c2c" style="background:#8a1c2c;" data-name="maroon" title="Maroon"></button>
+      <button class="color-swatch" data-color="#f2a3bd" style="background:#f2a3bd;" data-name="pink" title="Pink"></button>
       <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
       <button class="color-swatch" data-color="#7fcdf0" style="background:#7fcdf0;" data-name="skyblue" title="Sky blue"></button>
       <button class="color-swatch" data-color="#1560d4" style="background:#1560d4;" data-name="blue" title="Blue"></button>
       <button class="color-swatch" data-color="#14245c" style="background:#14245c;" data-name="navy" title="Navy"></button>
       <button class="color-swatch" data-color="#5a2d86" style="background:#5a2d86;" data-name="purple" title="Purple"></button>
+      <button class="color-swatch" data-color="#f07d1c" style="background:#f07d1c;" data-name="orange" title="Orange"></button>
       <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
       <button class="color-swatch" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
     </div>
     <div class="color-row" id="cloth-picker">
       <span class="swatch-label" data-i18n="cloth">Cloth</span>
       <button class="color-swatch" data-color="#000000" style="background:#000000;" data-name="black" title="Black"></button>
+      <button class="color-swatch" data-color="#8b8d90" style="background:#8b8d90;" data-name="gray" title="Gray"></button>
       <button class="color-swatch" data-color="#d81e1e" style="background:#d81e1e;" data-name="red" title="Red"></button>
       <button class="color-swatch" data-color="#8a1c2c" style="background:#8a1c2c;" data-name="maroon" title="Maroon"></button>
+      <button class="color-swatch" data-color="#f2a3bd" style="background:#f2a3bd;" data-name="pink" title="Pink"></button>
       <button class="color-swatch" data-color="#0a8a3c" style="background:#0a8a3c;" data-name="green" title="Green"></button>
       <button class="color-swatch" data-color="#7fcdf0" style="background:#7fcdf0;" data-name="skyblue" title="Sky blue"></button>
       <button class="color-swatch" data-color="#1560d4" style="background:#1560d4;" data-name="blue" title="Blue"></button>
       <button class="color-swatch" data-color="#14245c" style="background:#14245c;" data-name="navy" title="Navy"></button>
       <button class="color-swatch" data-color="#5a2d86" style="background:#5a2d86;" data-name="purple" title="Purple"></button>
+      <button class="color-swatch" data-color="#f07d1c" style="background:#f07d1c;" data-name="orange" title="Orange"></button>
       <button class="color-swatch" data-color="#ffd400" style="background:#ffd400;" data-name="yellow" title="Yellow"></button>
       <button class="color-swatch active" data-color="#ffffff" style="background:#ffffff;" data-name="white" title="White"></button>
     </div>
@@ -371,11 +378,11 @@
 ::::::::'--------------------------------------------------------------------------------------------'::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-                        `                                "  `          "                                 |&gt;
-           ''                         "                                     ,                            |
+                                                                                                         |&gt;
+                                                                                                         |
 _________________________________________________________________________________________________________|
-   `                          '          "                        '        "     '                 '.     \
-                                                    .     ,    .                    ,     ,          '-.   \</div>
+                                                                                                   '.     \
+                                                                                                     '-.   \</div>
     <div id="banner-overlay">
       <div id="banner-text"></div>
     </div>
@@ -407,7 +414,7 @@ ________________________________________________________________________________
     const height = brRect.bottom - tlRect.top;
 
     overlay.style.top    = (tlRect.top  - wrapRect.top)  + 'px';
-    overlay.style.left   = (tlRect.left - wrapRect.left) + 'px';
+    overlay.style.left   = (tlRect.left - wrapRect.left + asciiWrap.scrollLeft) + 'px';
     overlay.style.width  = width + 'px';
     overlay.style.height = height + 'px';
 
@@ -452,7 +459,7 @@ ________________________________________________________________________________
       builtBy: 'Built by',
       builtIn: 'in NYC. (Last updated October 2026)',
       github: 'open source · view on github',
-      colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy', maroon: 'Maroon', skyblue: 'Sky blue', purple: 'Purple' }
+      colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy', maroon: 'Maroon', skyblue: 'Sky blue', purple: 'Purple', pink: 'Pink', gray: 'Gray', orange: 'Orange' }
     },
     it: {
       description: 'Un font gratuito ispirato agli striscioni dipinti a mano dei tifosi e degli ultras del calcio italiano',
@@ -464,7 +471,7 @@ ________________________________________________________________________________
       builtBy: 'Creato da',
       builtIn: 'a NYC. (Ultimo aggiornamento: ottobre 2026)',
       github: 'open source · vedi su github',
-      colors: { black: 'Nero', white: 'Bianco', red: 'Rosso', green: 'Verde', blue: 'Blu', yellow: 'Giallo', navy: 'Blu scuro', maroon: 'Granata', skyblue: 'Celeste', purple: 'Viola' }
+      colors: { black: 'Nero', white: 'Bianco', red: 'Rosso', green: 'Verde', blue: 'Blu', yellow: 'Giallo', navy: 'Blu scuro', maroon: 'Granata', skyblue: 'Celeste', purple: 'Viola', pink: 'Rosa', gray: 'Grigio', orange: 'Arancione' }
     }
   };
 
