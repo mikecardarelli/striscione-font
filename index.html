@@ -20,9 +20,20 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  /* Two papers to read it on: La Gazzetta dello Sport's pink (default)... */
   :root {
-    /* the pale pink gazzetta.it uses as a background */
     --paper: #fde9eb;
+    --title: #000;
+    --hover: blue;
+    --placeholder: #8a7a76;
+  }
+
+  /* ...or the Corriere dello Sport's white page and red masthead */
+  :root[data-paper="cds"] {
+    --paper: #f9f9f9;
+    --title: #cd020e;
+    --hover: #cd020e;
+    --placeholder: #8a8a8a;
   }
 
   html, body {
@@ -43,18 +54,20 @@
   }
 
   footer a:hover {
-    color: blue;
+    color: var(--hover);
   }
 
-  .lang-switch {
+  .switches {
     position: fixed;
     top: 16px;
     right: 40px;
     z-index: 3;
     font-size: 13px;
+    display: flex;
+    gap: 28px;
   }
 
-  .lang-switch button {
+  .switches button {
     font-family: inherit;
     font-size: inherit;
     letter-spacing: 0.12em;
@@ -65,11 +78,11 @@
     cursor: pointer;
   }
 
-  .lang-switch button:hover {
-    color: blue;
+  .switches button:hover {
+    color: var(--hover);
   }
 
-  .lang-switch button.active {
+  .switches button.active {
     font-weight: bold;
     text-decoration: underline;
   }
@@ -110,6 +123,7 @@
     /* as big as the window allows while its baseline stays clear of the floodlights below */
     font-size: clamp(56px, min(13vw, 43vh - 150px), 240px);
     font-weight: normal;
+    color: var(--title);
     line-height: 1;
     margin-top: -0.1em;
     white-space: nowrap;
@@ -136,7 +150,7 @@
   }
 
   .download-link:hover {
-    color: blue;
+    color: var(--hover);
   }
 
   .banner-bar {
@@ -166,7 +180,7 @@
   }
 
   .banner-bar input::placeholder {
-    color: #8a7a76;
+    color: var(--placeholder);
   }
 
   .color-row {
@@ -251,7 +265,7 @@
       width: 100%;
       padding: 48px 20px 20px;
     }
-    .lang-switch {
+    .switches {
       position: absolute;
       top: 14px;
       right: 20px;
@@ -280,6 +294,11 @@
 </style>
  <!-- Emoji Favicon -->
   <script>
+    // pick up the remembered newspaper before the page paints
+    try {
+      if (localStorage.getItem('paper') === 'cds') document.documentElement.dataset.paper = 'cds';
+    } catch (e) {}
+
     const canvas = document.createElement('canvas');
     canvas.width = 32;
     canvas.height = 32;
@@ -295,10 +314,16 @@
   </script>
 </head>
 <body>
-<nav class="lang-switch" aria-label="Language / Lingua">
-  <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button> /
-  <button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
-</nav>
+<div class="switches">
+  <nav class="paper-switch" aria-label="Newspaper / Giornale">
+    <button type="button" data-paper="gds" lang="it" title="La Gazzetta dello Sport" aria-label="La Gazzetta dello Sport">GdS</button> /
+    <button type="button" data-paper="cds" lang="it" title="Corriere dello Sport" aria-label="Corriere dello Sport">CdS</button>
+  </nav>
+  <nav class="lang-switch" aria-label="Language / Lingua">
+    <button type="button" data-lang="it" lang="it" aria-label="Italiano">IT</button> /
+    <button type="button" data-lang="en" lang="en" aria-label="English">EN</button>
+  </nav>
+</div>
 <div class="page">
 
   <aside class="sidebar">
@@ -503,6 +528,24 @@ ________________________________________________________________________________
   let savedLang = null;
   try { savedLang = localStorage.getItem('lang'); } catch (e) {}
   setLanguage(STRINGS[savedLang] ? savedLang : (navigator.language || '').toLowerCase().startsWith('it') ? 'it' : 'en');
+
+  // Newspaper switch: Gazzetta dello Sport pink or Corriere dello Sport white and red
+  const paperButtons = document.querySelectorAll('.paper-switch button');
+
+  function setPaper(paper) {
+    if (paper === 'cds') document.documentElement.dataset.paper = 'cds';
+    else delete document.documentElement.dataset.paper;
+    paperButtons.forEach(b => b.classList.toggle('active', b.dataset.paper === paper));
+  }
+
+  paperButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      setPaper(button.dataset.paper);
+      try { localStorage.setItem('paper', button.dataset.paper); } catch (e) {}
+    });
+  });
+
+  setPaper(document.documentElement.dataset.paper === 'cds' ? 'cds' : 'gds');
 
   input.addEventListener('input', updateBanner);
   window.addEventListener('resize', positionOverlay);
