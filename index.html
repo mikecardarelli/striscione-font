@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:title" content="Striscione Font" />
-<meta property="og:description" content="A free font inspired by the hand-painted banners of Italian football fans and ultras." />
+<meta property="og:description" content="A free font inspired by striscioni, the hand-painted banners of Italian calcio fan culture." />
 <meta property="og:url" content="https://mikecardarelli.github.io/striscione-font/" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://mikecardarelli.github.io/striscione-font/preview.png" />
@@ -14,7 +14,7 @@
 <style>
   @font-face {
       font-family: 'Striscione';
-      src: url('striscione.woff2') format('woff2');
+      src: url('fonts/striscione-regular.woff2') format('woff2');
       font-weight: normal;
       font-style: normal; }
 
@@ -107,9 +107,11 @@
 
   h1 {
     font-family: 'Striscione', Impact, 'Arial Narrow', sans-serif;
-    font-size: clamp(56px, 9vw, 132px);
+    /* as big as the window allows while its baseline stays clear of the floodlights below */
+    font-size: clamp(56px, min(13vw, 43vh - 150px), 240px);
     font-weight: normal;
     line-height: 1;
+    margin-top: -0.1em;
     white-space: nowrap;
     margin-bottom: 32px;
   }
@@ -255,7 +257,7 @@
       right: 20px;
     }
     h1 {
-      font-size: 14vw;
+      font-size: 21vw;
       margin-bottom: 20px;
     }
     .description, .download-link, .banner-bar input::placeholder {
@@ -303,9 +305,8 @@
     <header class="header">
       <h1>STRISCIONE</h1>
       <div class="header-sub">
-        <p class="description" data-i18n="description">A free font inspired by the hand-painted banners (<i>striscioni</i>) of Italian football fans and ultras</p>
-        <!-- TODO: point this at the real download once the font is published -->
-        <a href="#" class="download-link" id="download-link" data-i18n="download">Download &rarr;</a>
+        <p class="description" data-i18n="description">A free font inspired by <i>striscioni</i>, the hand-painted banners of Italian calcio fan culture</p>
+        <a href="fonts/striscione-regular.otf" download class="download-link" id="download-link" data-i18n="download">Download &rarr;</a>
       </div>
     </header>
     <div class="banner-bar">
@@ -358,9 +359,9 @@
 |o o o o|                                                                                            |o o o o|
 |o o o o|                                                                                            |o o o o|
 '-------'                                                                                            '-------'
-   |X|              |~~~~~~/                      |~~~~~~/                      |~~~~~~/                |X|
-   |X|              |~~~~~/                       |~~~~~/                       |~~~~~/                 |X|
-   |X|              |                             |                             |                       |X|
+   |X|              |~~~~~~/                      |‾‾‾‾‾‾‾/                     |‾‾--..__               |X|
+   |X|              |~~~~~/                       |      &lt;                      |__--''‾‾               |X|
+   |X|              |                             |_______\                     |                       |X|
    |X|              |                             |                             |                       |X|
  o |X|  \o/ \o/ \o  |   \o/  \o/ o/ \o/  o/ \o    |  o/ \o  \o  \o/ \o/ \o/  o  |   \o/  o/ \o/ \o/  \o |X|  o
    o/ \o  \o/ \o/ \o/  o/ \o/  o  \o  \o/  o/ \o/  o/  o   o/ \o/ \o/  o/  o/ \o/  o  \o/  o/ \o/  o/ \o/  o/
@@ -381,8 +382,8 @@
                                                                                                          |&gt;
                                                                                                          |
 _________________________________________________________________________________________________________|
-                                                                                                   '.     \
-                                                                                                     '-.   \</div>
+                                                                                                     '.   \
+                                                                                                       '-._\</div>
     <div id="banner-overlay">
       <div id="banner-text"></div>
     </div>
@@ -450,7 +451,7 @@ ________________________________________________________________________________
   // Translations
   const STRINGS = {
     en: {
-      description: 'A free font inspired by the hand-painted banners (<i>striscioni</i>) of Italian football fans and ultras',
+      description: 'A free font inspired by <i>striscioni</i>, the hand-painted banners of Italian calcio fan culture',
       download: 'Download &rarr;',
       label: 'Hang a banner!',
       placeholder: 'type something...',
@@ -462,7 +463,7 @@ ________________________________________________________________________________
       colors: { black: 'Black', white: 'White', red: 'Red', green: 'Green', blue: 'Blue', yellow: 'Yellow', navy: 'Navy', maroon: 'Maroon', skyblue: 'Sky blue', purple: 'Purple', pink: 'Pink', gray: 'Gray', orange: 'Orange' }
     },
     it: {
-      description: 'Un font gratuito ispirato agli striscioni dipinti a mano dei tifosi e degli ultras del calcio italiano',
+      description: 'Un font gratuito ispirato agli striscioni dipinti a mano, tradizione del tifo italiano',
       download: 'Scarica &rarr;',
       label: 'Appendi uno striscione!',
       placeholder: 'scrivi qualcosa...',
